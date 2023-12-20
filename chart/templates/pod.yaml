@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myapp
+spec:
+  containers:
+  - name: my-app
+    image: nginx
+    ports:
+    - containerPort: 8080
+    imagePullPolicy: Always
+    volumeMounts:
+      {{- with .Values.extraVolumeMounts }}
+      {{- tpl . $ | nindent 6 }}
+      {{- end }}
+  volumes:
+    {{- with .Values.extraVolumes }}
+    {{- tpl . $ | nindent 4 }}
+    {{- end }}
