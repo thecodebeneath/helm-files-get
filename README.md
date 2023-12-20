@@ -27,6 +27,8 @@ cat /tmp/realm.json
 
 # Publishing chart to use "remotely"
 
+Ref to use the "GitHub pages" feature to behave as a file server: https://github.com/technosophos/tscharts/tree/master
+
 Package and publish chart
 ```
 helm package ./chart
@@ -37,8 +39,13 @@ git commit -m "New chart index"
 git push
 ```
 
-Add a helm repo and use it
+One-timer to add GitHub page as a helm repo. This makes the `./docs` directory the repo url.
 ```
 helm repo add codebeneath https://thecodebeneath.github.io/helm-files-get
-helm install app2 codebeneath/helm-file-get
+```
+
+Use the repo to pull the remote chart
+```
+helm repo update codebeneath
+helm install myapp codebeneath/helm-file-get
 ```
