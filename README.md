@@ -29,7 +29,7 @@ cat /tmp/realm.json
 
 Ref to use the "GitHub pages" feature to behave as a file server: https://github.com/technosophos/tscharts/tree/master
 
-Package and publish chart
+## Package and publish chart
 ```
 helm package ./chart
 mv helm-file-get-0.1.0.tgz docs
@@ -39,13 +39,31 @@ git commit -m "New chart index"
 git push
 ```
 
-One-timer to add GitHub page as a helm repo. This makes the `./docs` directory the repo url.
+## One-timer to add GitHub page as a helm repo.
+This makes the `./docs` directory the repo url.
 ```
 helm repo add codebeneath https://thecodebeneath.github.io/helm-files-get
 ```
 
-Use the repo to pull the remote chart
+## Use the repo to pull the remote chart
 ```
 helm repo update codebeneath
+```
+
+## Try a default install
+```
+cd install-from-repo
 helm install myapp codebeneath/helm-file-get
 ```
+
+> **this uses the chart packaged assets/realm.json file (the default)**
+
+## Try to override using a file from local filesystem
+```
+helm install myapp codebeneath/helm-file-get --values override-values.yaml --version 0.2.0
+```
+> **this uses the chart packaged assets/junk.json file (from the override-values file).**
+
+> **it does NOT take the local directory assets/junk.json file as I hoped.**
+
+> **bummer.**

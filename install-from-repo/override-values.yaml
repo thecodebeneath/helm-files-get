@@ -1,0 +1,24 @@
+replicaCount: 1
+image:
+  repository: "hello-world"
+  tag: "1.0"
+  pullPolicy: IfNotPresent
+service:
+  type: NodePort
+  port: 80
+
+secrets:
+  realm-secret:
+    stringData:
+      realm.json: '{{ .Files.Get "assets/junk.json" }}'
+
+extraVolumes: |-
+  - name: realm-vol
+    secret:
+      secretName: realm-secret
+      
+extraVolumeMounts: |-
+  - name: realm-vol
+    mountPath: /tmp/realm.json
+    subPath: realm.json
+
